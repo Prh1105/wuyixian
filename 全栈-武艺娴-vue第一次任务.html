@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .redtext {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="inputValue" @keydown.enter="add">
+        <p>你要输入的单词是：{{inputValue}}</p>
+        <button @click="add">确定</button>
+        <button @click="del">删除</button>
+        <p v-if="list.length>5" v-bind:class="{'redtext':list.length>5}">数量太多啦！！！</p>
+        <ul v-bind:class="{'redtext':list.length>5}">
+            单词列表：
+            <li v-for="(item, index) in list" :key="index">{{item}}</li>
+        </ul>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        inputValue: '',
+                        list: []
+                    }
+                },
+                methods: {
+                    add: function () {
+                        if (this.inputValue) {
+                            this.list.push(this.inputValue)
+                            this.inputValue = ''
+                        }
+                    },
+
+                    del: function () {
+                        if (this.list.length > 0) {
+                            this.list.pop()
+                        }
+                    }
+                }
+            });
+            app.mount("#app")
+        </script>
+    </div>
+</body>
+
+</html>
